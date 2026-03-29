@@ -107,3 +107,49 @@ p {
   color: #e5e7eb;
 }
 
+.subtitle-small {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Jardin de tulipes */
+#tulip-garden {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(156, 163, 175, 0.6);
+}
+
+.tulip {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  background-image: url("images/tulipes-sprite.png");
+  background-size: auto 64px;  /* hauteur 64px, largeur adaptée */
+  background-repeat: no-repeat;
+  animation: sway 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Légère variation de timing */
+.tulip:nth-child(3n) {
+  animation-duration: 4.2s;
+}
+.tulip:nth-child(4n) {
+  animation-duration: 3s;
+}
+
+/* Animation "vent" */
+@keyframes sway {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-2deg); }
+  50%  { transform: rotate(1.8deg); }
+  75%  { transform: rotate(-1.2deg); }
+  100% { transform: rotate(0deg); }
+}
