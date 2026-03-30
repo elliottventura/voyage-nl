@@ -8,8 +8,6 @@ const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
 const messageEl = document.getElementById("countdown-message");
 
-const countdownInterval = setInterval(updateCountdown, 1000);
-
 // Configuration du sprite sheet
 // Suppose que tu as 8 tulipes, chacune de 64px de large, alignées horizontalement
 const tulipSprite = {
@@ -107,3 +105,4 @@ function updateCountdown() {
 }
 
 updateCountdown();
+const countdownInterval = setInterval(updateCountdown, 1000);
