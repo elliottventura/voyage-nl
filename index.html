@@ -2,27 +2,29 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Surprise travel</title>
+  <title>Surprise voyage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="tulip-garden"></div>
+
   <main class="page">
-    <h1>A surprise is coming…</h1>
+    <h1>Une surprise se prépare…</h1>
     <p class="subtitle">
-      Something special will arrive soon !
+      Quelque chose de spécial arrive bientôt.
     </p>
 
     <section class="block">
-      <h2>Countdown</h2>
+      <h2>Compte à rebours</h2>
       <div id="countdown">
         <div class="countdown-item">
           <span class="count-number" id="days">0</span>
-          <span class="count-label">days</span>
+          <span class="count-label">jours</span>
         </div>
         <div class="countdown-item">
           <span class="count-number" id="hours">00</span>
-          <span class="count-label">hours</span>
+          <span class="count-label">heures</span>
         </div>
         <div class="countdown-item">
           <span class="count-number" id="minutes">00</span>
@@ -30,24 +32,13 @@
         </div>
         <div class="countdown-item">
           <span class="count-number" id="seconds">00</span>
-          <span class="count-label">seconds</span>
+          <span class="count-label">secondes</span>
         </div>
       </div>
       <p id="countdown-message"></p>
     </section>
-    
-    <section class="block">
-      <h2>Stay tuned</h2>
-      <p>More information is coming !</p>
-    </section>
-    <section class="block">
-      <h2>Le jardin de tulipes</h2>
-      <p class="subtitle-small">
-        Plus on approche du départ, plus les tulipes apparaissent…
-      </p>
-      <div id="tulip-garden"></div>
-    </section>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
