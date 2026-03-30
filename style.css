@@ -127,11 +127,11 @@ p {
 }
 
 .tulip {
-  width: 64px;
-  height: 64px;
+  width: 74px;
+  height: 200px;
   display: inline-block;
-  background-image: url("images/tulipes-sprite.png");
-  background-size: auto 64px;  /* hauteur 64px, largeur adaptée */
+  background-image: url("images/tulipeClosedAll_small.png");
+  background-size: auto 200px;
   background-repeat: no-repeat;
   animation: sway 3.5s ease-in-out infinite;
   transform-origin: bottom center;
