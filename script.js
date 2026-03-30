@@ -1,37 +1,39 @@
-// Date cible : 19 avril de cette année à 09:00
-const targetDate = new Date(new Date().getFullYear(), 3, 19, 9, 0, 0).getTime();
+// Target date: April 12 of this year at 09:00
+const targetDate = new Date(new Date().getFullYear(), 3, 12, 9, 0, 0).getTime();
 
-const daysEl     = document.getElementById("days");
-const hoursEl    = document.getElementById("hours");
-const minutesEl  = document.getElementById("minutes");
-const secondsEl  = document.getElementById("seconds");
-const messageEl  = document.getElementById("countdown-message");
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+const messageEl = document.getElementById("countdown-message");
 const tulipGarden = document.getElementById("tulip-garden");
 
-// Configuration du sprite sheet
+// Sprite sheet configuration
 const tulipSprite = {
-  imageUrl:    "images/tulipeClosedAll_small.png",
-  frameWidth:  74,
+  imageUrl: "images/tulipeClosedAll_small.png",
+  frameWidth: 74,
   frameHeight: 200,
   cols: 5,
-  rows: 1
+  rows: 1,
 };
 
-// Positions des 5 tulipes dans le sprite [colonne, ligne]
+// Positions of the 5 tulips in the sprite [column, row]
 const tulipPositions = [
   [0, 0],
   [1, 0],
   [2, 0],
   [3, 0],
-  [4, 0]
+  [4, 0],
 ];
 
-// Tableau qui stocke les couleurs choisies une fois pour toutes au chargement
+// Array that stores the chosen positions once and for all on load
 let assignedPositions = [];
 
 function calcTulipCount(daysLeft) {
-  const maxTulips  = Math.floor(window.innerWidth / (tulipSprite.frameWidth + 2));
-  const minTulips  = 3;
+  const maxTulips = Math.floor(
+    window.innerWidth / (tulipSprite.frameWidth + 2)
+  );
+  const minTulips = 3;
   const revealDays = 30;
   let factor;
   if (daysLeft >= revealDays) {
@@ -53,7 +55,8 @@ function renderTulipGarden(daysLeft) {
   if (newCount <= assignedPositions.length) return;
 
   for (let i = assignedPositions.length; i < newCount; i++) {
-    const randomPos = tulipPositions[Math.floor(Math.random() * tulipPositions.length)];
+    const randomPos =
+      tulipPositions[Math.floor(Math.random() * tulipPositions.length)];
     assignedPositions.push(randomPos);
 
     const tulip = document.createElement("div");
@@ -65,15 +68,15 @@ function renderTulipGarden(daysLeft) {
 }
 
 function updateCountdown() {
-  const now      = new Date().getTime();
+  const now = new Date().getTime();
   const distance = targetDate - now;
 
   if (distance <= 0) {
-    daysEl.textContent    = "0";
-    hoursEl.textContent   = "00";
+    daysEl.textContent = "0";
+    hoursEl.textContent = "00";
     minutesEl.textContent = "00";
     secondsEl.textContent = "00";
-    if (messageEl) messageEl.textContent = "C'est le grand jour ! ✨";
+    if (messageEl) messageEl.textContent = "It's the big day! ✨";
     renderTulipGarden(0);
     clearInterval(countdownInterval);
     return;
@@ -81,22 +84,22 @@ function updateCountdown() {
 
   const oneSecond = 1000;
   const oneMinute = oneSecond * 60;
-  const oneHour   = oneMinute * 60;
-  const oneDay    = oneHour   * 24;
+  const oneHour = oneMinute * 60;
+  const oneDay = oneHour * 24;
 
-  const days    = Math.floor(distance / oneDay);
-  const hours   = Math.floor((distance % oneDay)    / oneHour);
-  const minutes = Math.floor((distance % oneHour)   / oneMinute);
+  const days = Math.floor(distance / oneDay);
+  const hours = Math.floor((distance % oneDay) / oneHour);
+  const minutes = Math.floor((distance % oneHour) / oneMinute);
   const seconds = Math.floor((distance % oneMinute) / oneSecond);
 
-  daysEl.textContent    = days;
-  hoursEl.textContent   = String(hours).padStart(2, "0");
+  daysEl.textContent = days;
+  hoursEl.textContent = String(hours).padStart(2, "0");
   minutesEl.textContent = String(minutes).padStart(2, "0");
   secondsEl.textContent = String(seconds).padStart(2, "0");
 
   renderTulipGarden(days);
 }
 
-// Premier appel immédiat, puis toutes les secondes
+// First immediate call, then every second
 updateCountdown();
 const countdownInterval = setInterval(updateCountdown, 1000);
