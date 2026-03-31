@@ -29,9 +29,21 @@ const tulipPositions = [
 // Array that stores the chosen positions once and for all on load
 let assignedPositions = [];
 
+// Get responsive tulip dimensions based on screen size
+function getTulipDimensions() {
+  if (window.innerWidth <= 480) {
+    return { width: 42, height: 115 };
+  } else if (window.innerWidth <= 768) {
+    return { width: 50, height: 135 };
+  } else {
+    return { width: tulipSprite.frameWidth, height: tulipSprite.frameHeight };
+  }
+}
+
 function calcTulipCount(daysLeft) {
+  const dims = getTulipDimensions();
   const maxTulips = Math.floor(
-    window.innerWidth / (tulipSprite.frameWidth + 2)
+    window.innerWidth / (dims.width + 2)
   );
   const minTulips = 3;
   const revealDays = 30;
@@ -54,6 +66,10 @@ function renderTulipGarden(daysLeft) {
   // On n'ajoute des tulipes que si le nombre augmente (jamais de reset)
   if (newCount <= assignedPositions.length) return;
 
+  const dims = getTulipDimensions();
+  // Total sprite sheet width = frameWidth × number of columns
+  const spriteSheetWidth = dims.width * tulipSprite.cols;
+
   for (let i = assignedPositions.length; i < newCount; i++) {
     const randomPos =
       tulipPositions[Math.floor(Math.random() * tulipPositions.length)];
@@ -61,8 +77,14 @@ function renderTulipGarden(daysLeft) {
 
     const tulip = document.createElement("div");
     tulip.className = "tulip";
-    const offsetX = -randomPos[0] * tulipSprite.frameWidth;
+    
+    // Calculate background position and size based on responsive dimensions
+    const offsetX = -randomPos[0] * dims.width;
     tulip.style.backgroundPosition = `${offsetX}px 0px`;
+    tulip.style.backgroundSize = `${spriteSheetWidth}px ${dims.height}px`;
+    tulip.style.width = `${dims.width}px`;
+    tulip.style.height = `${dims.height}px`;
+    
     tulipGarden.appendChild(tulip);
   }
 }
@@ -99,6 +121,21 @@ function updateCountdown() {
 
   renderTulipGarden(days);
 }
+
+// Handle window resize to adjust tulip count and sizing
+let resizeTimeout;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    // Clear existing tulips and recalculate with new dimensions
+    tulipGarden.innerHTML = "";
+    assignedPositions = [];
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    renderTulipGarden(days >= 0 ? days : 0);
+  }, 150); // Debounce to avoid excessive recalculations
+});
 
 // First immediate call, then every second
 updateCountdown();

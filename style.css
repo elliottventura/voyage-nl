@@ -141,7 +141,7 @@ p {
   flex-shrink: 0;
   display: inline-block;
   background-image: url("images/tulipeClosedAll_small.png");
-  background-size: auto 200px;
+  background-size: 370px 200px; /* 5 frames × 74px = 370px total width */
   background-repeat: no-repeat;
   overflow: hidden;
   background-clip: content-box;
@@ -167,4 +167,17 @@ p {
   50%  { transform: rotate(1.8deg); }
   75%  { transform: rotate(-1.2deg); }
   100% { transform: rotate(0deg); }
+}
+
+/* Responsive tulip garden height for smaller screens */
+@media (max-width: 768px) {
+  #tulip-garden {
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  #tulip-garden {
+    height: 120px;
+  }
 }
