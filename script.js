@@ -8,13 +8,25 @@ const secondsEl = document.getElementById("seconds");
 const messageEl = document.getElementById("countdown-message");
 const tulipGarden = document.getElementById("tulip-garden");
 
-// Sprite sheet configuration
-const tulipSprite = {
+// Sprite sheet configurations (original/real size)
+const tulipSpriteClosed = {
   imageUrl: "images/tulipeClosedAll_small.png",
   frameWidth: 74,
   frameHeight: 200,
   cols: 5,
   rows: 1,
+  totalWidth: 370,
+  totalHeight: 200,
+};
+
+const tulipSpriteOpened = {
+  imageUrl: "images/tulipeOpenedAll_small.png",
+  frameWidth: 103,
+  frameHeight: 200,
+  cols: 5,
+  rows: 1,
+  totalWidth: 515,
+  totalHeight: 200,
 };
 
 // Positions of the 5 tulips in the sprite [column, row]
@@ -26,8 +38,16 @@ const tulipPositions = [
   [4, 0],
 ];
 
-// Array that stores tulip data: { spriteColumn, row, left }
+// Array that stores tulip data: { spriteColumn, row, left, type }
 let assignedTulips = [];
+
+function getRandomTulipType() {
+  return Math.random() < 0.5 ? "closed" : "opened";
+}
+
+function getTulipSprite(type) {
+  return type === "opened" ? tulipSpriteOpened : tulipSpriteClosed;
+}
 
 function calcTulipCount(daysLeft) {
   const revealDays = 30;
@@ -61,7 +81,6 @@ function renderTulipGarden(daysLeft) {
   // Only add tulips if count increases (never reset)
   if (newCount <= assignedTulips.length) return;
 
-  const tulipWidth = 37;
   const tulipHeight = 100;
   const rowHeight = 50; // Space between rows (includes some overlap)
   const gardenWidth = window.innerWidth;
@@ -78,10 +97,14 @@ function renderTulipGarden(daysLeft) {
     const maxLeft = gardenWidth;
     const left = Math.random() * maxLeft;
 
-    assignedTulips.push({ spriteColumn, row, left });
+    // Randomly choose between closed and opened tulips
+    const type = getRandomTulipType();
+    const sprite = getTulipSprite(type);
+
+    assignedTulips.push({ spriteColumn, row, left, type });
 
     const tulip = document.createElement("div");
-    tulip.className = "tulip";
+    tulip.className = type === "opened" ? "tulip tulip-opened" : "tulip";
 
     // Set absolute positioning
     tulip.style.left = `${left}px`;
@@ -92,9 +115,12 @@ function renderTulipGarden(daysLeft) {
     const baseZIndex = (rows - 1 - row) * 100;
     tulip.style.zIndex = baseZIndex + Math.floor(Math.random() * 10);
 
-    // Background position based on sprite column
-    const offsetX = -spriteColumn * tulipWidth;
+    // Background image and position based on sprite type and column
+    tulip.style.backgroundImage = `url("${sprite.imageUrl}")`;
+    // Calculate background position to show the selected frame
+    const offsetX = -spriteColumn * sprite.frameWidth;
     tulip.style.backgroundPosition = `${offsetX}px 0px`;
+    tulip.style.backgroundSize = `${sprite.totalWidth}px ${sprite.totalHeight}px`;
 
     tulipGarden.appendChild(tulip);
   }

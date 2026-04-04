@@ -132,16 +132,24 @@ p {
 /* Each tulip */
 .tulip {
   position: absolute;
-  width: 37px;
-  height: 100px;
+  width: 74px;
+  height: 200px;
   bottom: 0;
   background-image: url("images/tulipeClosedAll_small.png");
-  background-size: 185px 100px; /* 5 frames × 37px = 185px total width (half size) */
+  background-size: 370px 200px; /* Real size: 74 × 5 = 370px */
   background-repeat: no-repeat;
   overflow: hidden;
   background-clip: content-box;
   animation: sway 3.5s ease-in-out infinite;
   transform-origin: bottom center;
+  transform: scale(0.5);
+}
+
+/* Opened tulips variant */
+.tulip.tulip-opened {
+  width: 103px;
+  background-image: url("images/tulipeOpenedAll_small.png");
+  background-size: 515px 200px; /* Real size: 103 × 5 = 515px */
 }
 
 .tulip:nth-child(3n) {
